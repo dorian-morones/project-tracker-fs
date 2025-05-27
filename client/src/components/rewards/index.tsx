@@ -1,9 +1,7 @@
 import React from 'react';
 
-type RewardsProps = {
-    projectCode: string;
-    reset: (projectCode: string | null) => void;
-};
+// types
+import type { RewardsProps } from '../../types/rewardsView_types';
 
 export const Rewards: React.FC<RewardsProps> = ({ projectCode, reset }) => {
 
