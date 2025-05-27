@@ -43,7 +43,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({ onSuccess }) => {
 
     return (
         <Flex
-            width="100vw"
+            width="auto"
             height="auto"
             align="center"
             justify="center"
