@@ -30,7 +30,7 @@ export const useProjects = (onSuccess: (projectCode: string) => void) => {
     const createProjectAPI = async (newProject: NewProject) => {
         try {
             const res = await axios.post('http://localhost:4000/projects', newProject);
-            onSuccess(res.data.id);
+            onSuccess(res.data[0].project_code);
         }
         catch (error) {
             console.error("Error creating project via API:", error);

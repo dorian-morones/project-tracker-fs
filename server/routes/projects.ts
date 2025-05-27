@@ -39,7 +39,7 @@ router.post('/', async (req: Request, res: Response) => {
             wants_notifications,
             notification_preference,
         },
-    ]);
+    ]).select('project_code');
 
     if (error) return res.status(500).json({ error: error.message });
     res.status(201).json(data);
