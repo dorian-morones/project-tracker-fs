@@ -6,7 +6,12 @@ import { ProjectValidationSchema } from '../../schemas/projectForm_schema';
 import type { FormValues, ProjectFormProps } from '../../types/form_types'
 import type { NewProject, ProductLineOptions, ProjectNotificationOptions } from '../../types/newProject_types';
 
+// Hooks
+import { useProjects } from '../../hooks/useProjects';
+
 export const ProjectForm: React.FC<ProjectFormProps> = ({ onSuccess }) => {
+
+    const { createProjectSupabase } = useProjects(onSuccess);
 
     const initialValues: FormValues = {
         projectCode: '',
@@ -18,6 +23,7 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({ onSuccess }) => {
 
     // Handle form submission
     const handleSubmit = (values: FormValues) => {
+        console.log("🚀 ~ handleSubmit ~ values:", values)
         // transform the form values to match the NewProject type
         let newProjectFormatting: NewProject = {
             project_code: values.projectCode,
@@ -25,13 +31,15 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({ onSuccess }) => {
             product_line: values.productLine,
             wants_notifications: values.wantsNotifications,
         };
+        console.log("🚀 ~ handleSubmit ~ newProjectFormatting:", newProjectFormatting)
 
         // If the user wants notifications, add the notification preference
         // to the newProjectFormatting object
         if (values.wantsNotifications && values.notificationPreference) {
             newProjectFormatting.notification_preference = values.notificationPreference;
         }
-        
+
+        createProjectSupabase(newProjectFormatting)
 
     }
 
@@ -56,7 +64,14 @@ export const ProjectForm: React.FC<ProjectFormProps> = ({ onSuccess }) => {
 
                     <div>
                         <label>Product line</label>
-                        <Field as='select' name='productLine'></Field>
+                        <Field as='select' name='productLine'>
+                            <option value="">Select one</option>
+                            <option value="iPhone">iPhone</option>
+                            <option value="iPad">iPad</option>
+                            <option value="Mac">Mac</option>
+                            <option value="Vision Pro">Vision Pro</option>
+                            <option value="Other">Other</option>
+                        </Field>
                         <ErrorMessage name="productLine" component="div" />
                     </div>
 
